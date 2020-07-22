@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sprint 1 Challenge</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="initGame()">
+    <!-- <div class="all-elements-in"> -->
+    <header>
+        <h1>Mine Sweeper</h1>
+    </header>
+    <div class="buttons">
+
+    </div>
+    <div class="board-container">
+        <table class="center">
+            <tbody class="board"></tbody>
+        </table>
+    </div>
+    <footer>
+        <span>Developed by Mina Shtraicher</span>
+    </footer>
+    <!-- </div> -->
+
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+        if (document.addEventListener) {
+            document.addEventListener('contextmenu', function (e) {
+                onKeyClicked(e);
+                e.preventDefault();
+            }, false);
+        } else {
+            document.attachEvent('oncontextmenu', function () {
+                window.event.returnValue = false;
+            });
+        }
+    </script>
+</body>
+
+</html>

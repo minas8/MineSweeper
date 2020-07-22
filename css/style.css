@@ -1,0 +1,86 @@
+* {
+    /* box-sizing: border-box; */
+}
+
+body {
+border: 0;
+margin: 0;
+padding: 0;
+/* background-color: red; */
+text-align: center;
+background-color: linen;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header {
+    padding-top: 10px;
+    border-bottom: 2px dashed gray;
+
+}
+
+footer {
+    padding-top: 10px;
+    border-top: 2px dashed gray;
+
+}
+
+h1 {    
+    margin-top: 0;
+    /* padding: 5px; */
+    color: gray;
+    /* background-color: royalblue; */
+    /* border-radius: 14px; */
+}
+
+.board-container {
+    padding: 10px 0;
+    text-align: center;
+    background-color: lightgray;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cell {
+    width: 25px;
+    height:20px;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-align: center;
+    font-size:1.4em;
+    background-color: gray;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid #222222;
+    border-bottom: 1px solid #222222;
+}
+.cell:hover {
+    cursor: pointer;
+    background-color: #777777;
+}
+.cell img {
+    width:24px;
+    /* padding: 15px; */
+    height:auto;
+    transition: 3s;
+}
+
+.shown {
+    background-color: darkgray;
+    border-top: 1px solid #222222;
+    border-left: 1px solid #222222;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+
+}
+.marked {
+    background-color: lightgray;
+
+}
+
+.buttons {
+    background-color: salmon;
+}
