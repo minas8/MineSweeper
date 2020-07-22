@@ -1,7 +1,6 @@
 'use strict'
 
 var TIMER_FREQ = 100;
-var MINE = 'M';
 /*
 o Beginner (4 * 4 with 2 MINES)
 o Medium (8 * 8 with 12 MINES)
@@ -25,6 +24,7 @@ var gGame = {
 }
 
 var gGameStart;
+var gTimeStamp;
 var gGameInterval;
 
 function initGame() {
@@ -106,9 +106,11 @@ function renderBoard(board) {
             if (currCell.isShown) {
                 cellClass += ' shown';
                 if (currCell.minesAroundCount > 0) cellInnerHTML += getCellImg(currCell.minesAroundCount);
+                if (currCell.isMine) cellInnerHTML += getCellImg('mine');
             }
             if (currCell.isMarked) {
                 cellClass += ' marked';
+                cellInnerHTML += getCellImg('flag');
             }
 
             strHTML += `\t<td class="cell ${cellClass}" onclick="cellClicked(this,${i},${j})">\n
@@ -129,10 +131,15 @@ function getCellImg(imgName) {
 
 function setMines(board) {
     // Place 2 mines manually when each cell’s isShown set to true. 
-    board[3][2].isMine = true;
-    board[0][3].isMine = true;
-    console.log('board[3][2]:', board[3][2]);
-    console.log('board[0][3]:', board[0][3]);
+    // board[3][2].isMine = true;
+    // board[0][3].isMine = true;
+    // console.log('board[3][2]:', board[3][2]);
+    // console.log('board[0][3]:', board[0][3]);
+
+    // 1. Randomly locate the 2 mines on the board
+    for (var i = 0; i < gGameLevels[gChosenLevel].minesCount; i++) {
+        board[getRndIdx(0, board.length)][getRndIdx(0, board.length)].isMine = true;
+    }
 }
 
 function setMinesNegsCount(board) {
@@ -159,18 +166,45 @@ function onKeyClicked(event) {
 function cellClicked(elCell, i, j, isRightClick = false) {
     // console.log('elCell:', elCell, '\ni:', i, 'j:', j);
 
-    // 2. Implement that clicking a cell with “number” reveals the number of this cell
+    if (!gGame.isOn) {
+        gGame.isOn = true;
+        gGameStart = Date.now();
+        gTimeStamp = gGameStart;
+        gGame.secsPassed = (gTimeStamp - gGameStart) / 1000;
+        var elGameTime = document.querySelector('.timer');
+        elGameTime.innerText = gGame.secsPassed.toFixed(3);
+        gGameInterval = setInterval(showTime, TIMER_FREQ);
+    }
+
     // if isRightClick => marked
     if (isRightClick) {
-        gBoard[i][j].isMarked = true;
-        // elCell.classList.add('marked');
-        gGame.markedCount++;
+        if (gBoard[i][j].isMarked) {
+            // if right click and Marked => set the oposite => false
+            gBoard[i][j].isMarked = !gBoard[i][j].isMarked;
+            gGame.markedCount--;
+        } else {
+            // if right click and Unmarked => set the oposite => true
+            gBoard[i][j].isMarked = !gBoard[i][j].isMarked;
+            gGame.markedCount++;
+        }
+
     } else { // else => shown
+        // Left click reveals the cell’s content
         gBoard[i][j].isShown = true;
-        // elCell.classList.add('shown');
         gGame.shownCount++;
+
+        if (gBoard[i][j].isMine) {
+            // revealAllMines();
+            renderBoard(gBoard);
+            gameOver();
+        }
     }
-    renderBoard(gBoard);
+
+    // renderBoard(gBoard);
+
+    // if all cells are shown or marked or you hit a mine
+
+
     /*
     var cell = {
         minesAroundCount: 0,
@@ -180,4 +214,10 @@ function cellClicked(elCell, i, j, isRightClick = false) {
     };
     */
 
+}
+
+function gameOver() {
+    // if you hit a mine
+    clearInterval(gGameInterval);
+    gGame.isOn = false;
 }

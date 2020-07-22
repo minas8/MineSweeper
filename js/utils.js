@@ -84,6 +84,7 @@ function getRndIdx(min, max) {
 
 function showTime() {
     gTimeStamp = Date.now();
-    var elGameTime = document.querySelector('.game-time');
-    elGameTime.innerText = ((gTimeStamp - gGameStart) / 1000).toFixed(3);
+    gGame.secsPassed = (gTimeStamp - gGameStart) / 1000;
+    var elGameTime = document.querySelector('.timer');
+    elGameTime.innerText = gGame.secsPassed.toFixed(3);
 }
