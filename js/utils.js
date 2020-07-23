@@ -21,23 +21,55 @@ function countNeighbors(cellI, cellJ, mat) {
     return neighborsSum;
 }
 
+function getNeighbors(cellI, cellJ, mat) {
+    var neighbors = [];
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= mat.length) continue;
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (j < 0 || j >= mat[i].length) continue;
+            if (i === cellI && j === cellJ) continue;
+            if (mat[i][j].isMine) continue;
+            // if already isShown => do add the ceel again
+            if (mat[i][j].isShown) continue;
 
-
-
-
-
-
-
-
-
-
-
-
-
-function chooseYourLevel(level) {
-    gChosenLevel = level;
-    init();
+            // getNeighbors(i, j, mat);
+            neighbors.push({ i, j });
+        }
+    }
+    return neighbors;
 }
+
+function getAllNeighbors(cellI, cellJ, mat) {
+    var neighbors = [];
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= mat.length) continue;
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (j < 0 || j >= mat[i].length) continue;
+            // if already isShown => do add the ceel again
+            if (mat[i][j].isShown) continue;
+
+            // getNeighbors(i, j, mat);
+            neighbors.push({ i, j });
+        }
+    }
+    return neighbors;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function runGeneration(board) {
     var newBoard = copyMat(board);
